@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[我的第一篇文章]]></title>
+    <title><![CDATA[埼玉老师来啦]]></title>
+    <url>%2F2019%2F08%2F17%2F%E5%9F%BC%E7%8E%89%E8%80%81%E5%B8%88%E6%9D%A5%E5%95%A6%2F</url>
+    <content type="text"><![CDATA[埼玉老师天下无敌]]></content>
+      <categories>
+        <category>动漫</category>
+      </categories>
+      <tags>
+        <tag>一拳超人</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[博客初步搭建完毕]]></title>
     <url>%2F2019%2F08%2F15%2F%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%2F</url>
-    <content type="text"><![CDATA[第一段啦啦啦 第二段哗哗哗 第三段是是是]]></content>
+    <content type="text"><![CDATA[真是心酸，各种小坑。]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
   </entry>
 </search>
