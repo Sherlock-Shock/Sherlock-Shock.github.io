@@ -300,7 +300,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	  node1.setAttribute("class","search-pop-overlay");
 	  
 	  var div1 = document.createElement("div");
-	  dic1.setAttribute("id","search-loading-icon");
+	  div1.setAttribute("id","search-loading-icon");
 	  
 	  var i1 = document.createElement("i");
 	  i1.setAttribute("class","fa fa-spinner fa-pulse fa-5x fa-fw");
