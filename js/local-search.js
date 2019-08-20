@@ -294,11 +294,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Search function
   const searchFunc = () => {
-    document.body.appendChild(`<div class="search-pop-overlay">
-          <div id="search-loading-icon">
-            <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-          </div>
-        </div>`);
+	  
+	  
+	  var node1 = document.createElement("div");
+	  node1.setAttribute("class","search-pop-overlay");
+	  
+	  var div1 = document.createElement("div");
+	  dic1.setAttribute("id","search-loading-icon");
+	  
+	  var i1 = document.createElement("i");
+	  i1.setAttribute("class","fa fa-spinner fa-pulse fa-5x fa-fw");
+	  
+	 div1.appendChild(i1);
+	 node1.appendChild(div1);
+	 document.body.appendChild(node1); 
+	  
+	  
+    //document.body.appendChild(`<div class="search-pop-overlay"><div id="search-loading-icon"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div>`);
     document.querySelector('#search-loading-icon').css({
       margin: '20% auto 0 auto',
       'text-align': 'center'
