@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/S-32X32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/S-16X16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="一、基础方式的增删改查CRUD:mybatis约定：输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MyBatis]学习笔记">
+<meta property="og:url" content="http://www.pniao.club/2019/09/16/Mybatis-学习笔记/index.html">
+<meta property="og:site_name" content="Sherlock的个人博客">
+<meta property="og:description" content="一、基础方式的增删改查CRUD:mybatis约定：输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-16T12:28:47.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MyBatis]学习笔记">
+<meta name="twitter:description" content="一、基础方式的增删改查CRUD:mybatis约定：输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个">
+  <link rel="canonical" href="http://www.pniao.club/2019/09/16/Mybatis-学习笔记/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>[MyBatis]学习笔记 | Sherlock的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
+	<div class="bg_content" style="position: fixed; top: 0; z-index: -1; width: 100%; height: 100%;">
+	  <canvas id="canvas"></canvas>
+	</div>
+
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	<a href="https://github.com/Sherlock-Shock" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">ONE胖次！！！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">2</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">3</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">3</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off" autocorrect="off" autocapitalize="none"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    <div class="reading-progress-bar"></div>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/09/16/Mybatis-学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock的个人博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">[MyBatis]学习笔记
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-16 19:39:14 / 修改时间：20:28:47" itemprop="dateCreated datePublished" datetime="2019-09-16T19:39:14+08:00">2019-09-16</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、基础方式的增删改查CRUD"><a href="#一、基础方式的增删改查CRUD" class="headerlink" title="一、基础方式的增删改查CRUD:"></a>一、基础方式的增删改查CRUD:</h1><p>mybatis约定：<br>输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个</p>
+<a id="more"></a>
+<p><strong>输入参数 ：</strong></p>
+<p>是简单类型（8个基本类型+String） 是可以使用任何占位符,#{xxxx}</p>
+<p>如果是对象类型，则必须是对象的属性 #{属性名}</p>
+<p><strong>取值方式：</strong></p>
+<p>a.#{任意值} 或 ${value} ，其中的标识符只能是value</p>
+<p>b.#{}自动给String类型加上’’  （自动类型转换）</p>
+<p>  ${} 原样输出，但是适合于 动态排序（动态字段）</p>
+<p>动态排序：<br><code>select stuno,stuname,stuage  from student  order by ${value} asc</code></p>
+<p><strong>输出参数 ：</strong></p>
+<p><strong>a.resultType</strong></p>
+<p>1.简单类型（8个基本+String）</p>
+<p>2.输出参数为实体对象类型</p>
+<p>3.输出参数为实体对象类型的集合 ：虽然输出类型为集合，但是resultType依然写 集合的元素类型（resyltType=”Student”）</p>
+<p>4.输出参数类型为HashMap</p>
+<p>如果返回值类型是一个 对象（如Student），则无论返回一个、还是多个，<br>        再resultType都写成org.lanqiao.entity.Student<br>        即 resultType=”org.lanqiao.entity.Student”</p>
+<p><strong>例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;queryAllstudentByName1&quot; parameterType=&quot;org.com.entity.Student&quot; resultType=&quot;org.com.entity.Student&quot;	  &gt;</span><br><span class="line">		select * from student where name=#&#123;name&#125;</span><br><span class="line">	&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>b.resultMap:</strong> 实体类的属性、数据表的字段： 类型、名字不同时（stuno,id）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap type=&quot;student&quot; id=&quot;queryStudentByIdMap&quot;&gt;</span><br><span class="line">			&lt;!-- 指定类中的属性 和 表中的字段 对应关系 --&gt;</span><br><span class="line">			&lt;id property=&quot;stuNo&quot;  column=&quot;id&quot; /&gt;</span><br><span class="line">			&lt;result property=&quot;stuName&quot; column=&quot;name&quot; /&gt;</span><br><span class="line">	&lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意事项：</strong></p>
+<h4 id="a如果使用的-事务方式为-jdbc-则需要-手工commit提交，即session-commit"><a href="#a如果使用的-事务方式为-jdbc-则需要-手工commit提交，即session-commit" class="headerlink" title="a如果使用的 事务方式为 jdbc,则需要 手工commit提交，即session.commit();"></a>a如果使用的 事务方式为 jdbc,则需要 手工commit提交，即session.commit();</h4><h4 id="b所有的标签-select-update等-，都必须有sql语句，但是sql参数值可选"><a href="#b所有的标签-select-update等-，都必须有sql语句，但是sql参数值可选" class="headerlink" title="b所有的标签 select update等 ，都必须有sql语句，但是sql参数值可选"></a>b所有的标签 select update等 ，都必须有sql语句，但是sql参数值可选</h4><p> select* from student  where stuno = #{xx}<br>sql有参数：session.insert(statement, 参数值 );</p>
+<p>sql没参数：session.insert(statement);</p>
+<h1 id="二、mapper动态代理方式的crud-（MyBatis接口开发）"><a href="#二、mapper动态代理方式的crud-（MyBatis接口开发）" class="headerlink" title="二、mapper动态代理方式的crud （MyBatis接口开发）:"></a>二、mapper动态代理方式的crud （MyBatis接口开发）:</h1><p><strong>原则：约定优于配置</strong></p>
+<p><strong>硬编码方式</strong><br>    abc.java<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">		Configuration conf = new Configuration();</span><br><span class="line">		con.setName(&quot;myProject&quot;) ;</span><br><span class="line">   ```  </span><br><span class="line"></span><br><span class="line">**配置方式：**</span><br><span class="line">	abc.xml   </span><br><span class="line">		```&lt;name&gt;myProject&lt;/name&gt;</span><br></pre></td></tr></table></figure></p>
+<p>约定：默认值就是myProject</p>
+<p><strong>具体实现的步骤：</strong></p>
+<h3 id="1-基础环境：mybatis-jar-ojdbc-jar、conf-xml、mapper-xml"><a href="#1-基础环境：mybatis-jar-ojdbc-jar、conf-xml、mapper-xml" class="headerlink" title="1.基础环境：mybatis.jar/ojdbc.jar、conf.xml、mapper.xml"></a>1.基础环境：mybatis.jar/ojdbc.jar、conf.xml、mapper.xml</h3><h3 id="2-（不同之处）"><a href="#2-（不同之处）" class="headerlink" title="2.（不同之处）"></a>2.（不同之处）</h3><pre><code>约定的目标： 省略掉statement,即根据约定 直接可以定位出SQL语句</code></pre><h4 id="a-接口，接口中的方法必须遵循以下约定："><a href="#a-接口，接口中的方法必须遵循以下约定：" class="headerlink" title="a.接口，接口中的方法必须遵循以下约定："></a>a.接口，接口中的方法必须遵循以下约定：</h4><h5 id="1-方法名和mapper-xml文件中标签的id值相同"><a href="#1-方法名和mapper-xml文件中标签的id值相同" class="headerlink" title="1.方法名和mapper.xml文件中标签的id值相同"></a>1.方法名和mapper.xml文件中标签的id值相同</h5><h5 id="2-方法的-输入参数-和mapper-xml文件中标签的-parameterType类型一致-如果mapper-xml的标签中没有-parameterType，则说明方法没有输入参数"><a href="#2-方法的-输入参数-和mapper-xml文件中标签的-parameterType类型一致-如果mapper-xml的标签中没有-parameterType，则说明方法没有输入参数" class="headerlink" title="2.方法的 输入参数 和mapper.xml文件中标签的 parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)"></a>2.方法的 输入参数 和mapper.xml文件中标签的 parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)</h5><h5 id="3-方法的返回值-和mapper-xml文件中标签的-resultType类型一致-（无论查询结果是一个-还是多个（student、List），在mapper-xml标签中的resultType中只写-一个（Student）；如果没有resultType，则说明方法的返回值为void）"><a href="#3-方法的返回值-和mapper-xml文件中标签的-resultType类型一致-（无论查询结果是一个-还是多个（student、List），在mapper-xml标签中的resultType中只写-一个（Student）；如果没有resultType，则说明方法的返回值为void）" class="headerlink" title="3.方法的返回值  和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）"></a>3.方法的返回值  和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List<student>），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）</student></h5><p>除了以上约定，要实现 接口中的方法  和  Mapper.xml中SQL标签一一对应，还需要以下1点：<br>    namespace的值 ，就是  接口的全类名（ 接口 - mapper.xml 一一对应）</p>
+<p><strong>匹配的过程：（约定的过程）</strong><br>1.根据 接口名 找到 mapper.xml文件（根据的是namespace=接口全类名）<br>2.根据 接口的方法名 找到 mapper.xml文件中的SQL标签 （方法名=SQL标签Id值）</p>
+<p>以上2点可以保证： 当我们调用接口中的方法时，<br>程序能自动定位到 某一个Mapper.xml文件中的sqL标签</p>
+<p><strong>习惯：</strong>SQL映射文件（mapper.xml） 和 接口放在同一个包中 （注意修改conf.xml中加载mapper.xml文件的路径）</p>
+<p>以上，可以通过接口的方法-&gt;SQL语句</p>
+<p>执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;</span><br><span class="line">studentMapper.方法();</span><br></pre></td></tr></table></figure>
+
+<p>通过session对象获取接口（session.getMapper(接口.class);），再调用该接口中的方法，程序会自动执行该方法对应的SQL。</p>
+<h1 id="关联查询："><a href="#关联查询：" class="headerlink" title="关联查询："></a>关联查询：</h1><h3 id="一对一"><a href="#一对一" class="headerlink" title="一对一:"></a>一对一:</h3><p><strong>a.业务扩展类</strong><br>        核心：用resultType指定类的属性 包含 多表查询的所有字段</p>
+<p><strong>b.resultMap</strong><br>    1.通过 属性成员 将2个类建立起联系</p>
+<pre><code>2.</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap type=&quot;student&quot; id=&quot;student_card_map&quot;&gt;</span><br><span class="line">			&lt;!-- 学生的信息 --&gt;</span><br><span class="line">			&lt;id  property=&quot;stuNo&quot; column=&quot;stuNo&quot;/&gt;</span><br><span class="line">			&lt;result property=&quot;stuName&quot; column=&quot;stuName&quot; /&gt;</span><br><span class="line">			&lt;result property=&quot;stuAge&quot; column=&quot;stuAge&quot; /&gt;</span><br><span class="line">			&lt;!-- 一对一时，对象成员使用 association映射;javaType指定该属性的--&gt;</span><br><span class="line">			&lt;association property=&quot;card&quot; javaType=&quot;StudentCard&quot; &gt;</span><br><span class="line">					&lt;id property=&quot;cardId&quot; column=&quot;cardId&quot;/&gt;</span><br><span class="line">					&lt;result property=&quot;cardInfo&quot; column=&quot;cardInfo&quot;/&gt;</span><br><span class="line">			&lt;/association&gt;</span><br><span class="line">			</span><br><span class="line">	&lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一对一：association<br>一对多：collection</p>
+<h3 id="一对多："><a href="#一对多：" class="headerlink" title="一对多："></a>一对多：</h3><p>表：student studentclass  (关联：classid)<br>类：student studentClass  (关联：List<student> students )</student></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select  c.*,s.* from student s</span><br><span class="line">		inner join studentclass c </span><br><span class="line">		on c.classid = s.classid</span><br><span class="line">		where c.classid = 1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多对一-多对多"><a href="#多对一-多对多" class="headerlink" title="多对一 多对多"></a>多对一 多对多</h3><p>MyBatis:多对一，多对多的本质就是  一对多的变化</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Sherlock 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/17/埼玉老师来啦/" rel="next" title="埼玉老师来啦">
+                  <i class="fa fa-chevron-left"></i> 埼玉老师来啦
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjExMy8yMjYyNA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/header.jpg"
+      alt="Sherlock">
+  <p class="site-author-name" itemprop="name">Sherlock</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Sherlock-Shock" title="GitHub &rarr; https://github.com/Sherlock-Shock" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/u/5613372680" title="微博 &rarr; https://weibo.com/u/5613372680" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、基础方式的增删改查CRUD"><span class="nav-number">1.</span> <span class="nav-text">一、基础方式的增删改查CRUD:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a如果使用的-事务方式为-jdbc-则需要-手工commit提交，即session-commit"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">a如果使用的 事务方式为 jdbc,则需要 手工commit提交，即session.commit();</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b所有的标签-select-update等-，都必须有sql语句，但是sql参数值可选"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">b所有的标签 select update等 ，都必须有sql语句，但是sql参数值可选</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、mapper动态代理方式的crud-（MyBatis接口开发）"><span class="nav-number">2.</span> <span class="nav-text">二、mapper动态代理方式的crud （MyBatis接口开发）:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基础环境：mybatis-jar-ojdbc-jar、conf-xml、mapper-xml"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.基础环境：mybatis.jar/ojdbc.jar、conf.xml、mapper.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-（不同之处）"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.（不同之处）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-接口，接口中的方法必须遵循以下约定："><span class="nav-number">2.0.2.1.</span> <span class="nav-text">a.接口，接口中的方法必须遵循以下约定：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-方法名和mapper-xml文件中标签的id值相同"><span class="nav-number">2.0.2.1.1.</span> <span class="nav-text">1.方法名和mapper.xml文件中标签的id值相同</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-方法的-输入参数-和mapper-xml文件中标签的-parameterType类型一致-如果mapper-xml的标签中没有-parameterType，则说明方法没有输入参数"><span class="nav-number">2.0.2.1.2.</span> <span class="nav-text">2.方法的 输入参数 和mapper.xml文件中标签的 parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-方法的返回值-和mapper-xml文件中标签的-resultType类型一致-（无论查询结果是一个-还是多个（student、List），在mapper-xml标签中的resultType中只写-一个（Student）；如果没有resultType，则说明方法的返回值为void）"><span class="nav-number">2.0.2.1.3.</span> <span class="nav-text">3.方法的返回值  和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联查询："><span class="nav-number">3.</span> <span class="nav-text">关联查询：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一对一"><span class="nav-number">3.0.1.</span> <span class="nav-text">一对一:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多："><span class="nav-number">3.0.2.</span> <span class="nav-text">一对多：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对一-多对多"><span class="nav-number">3.0.3.</span> <span class="nav-text">多对一 多对多</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+	  
+	  
+	  
+	  
+    </div>
+	
+	
+	
+  </aside>
+  
+  
+  
+  <div id="sidebar-dimmer">
+  
+  
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank">粤ICP备19064639号 </a>&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+  
+	<link rel="stylesheet" href="/dist/APlayer.min.css">
+	<div id="aplayer"></div>
+	<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+	<script type="text/javascript" src="/dist/music.js"></script>
+  
+  
+  
+  
+	
+  
+      <script type="text/javascript" src="/js/src/clicklove.js"></script>
+	
+	
+  <script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+  <!--崩溃欺骗-->
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
