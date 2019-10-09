@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/S-32X32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/S-16X16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="1、安装与配置1.1、下载并安装https://msysgit.github.io 安装时：  Use git from git bash only..,其他默认下一步配置path: D:\Git\bin配置git：用户名和邮箱右键-git bash 12git config --global user.name &amp;quot;xxx&amp;quot;git config --global user.em">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git基本操作">
+<meta property="og:url" content="http://www.pniao.club/2019/10/09/git基本操作/index.html">
+<meta property="og:site_name" content="Sherlock的个人博客">
+<meta property="og:description" content="1、安装与配置1.1、下载并安装https://msysgit.github.io 安装时：  Use git from git bash only..,其他默认下一步配置path: D:\Git\bin配置git：用户名和邮箱右键-git bash 12git config --global user.name &amp;quot;xxx&amp;quot;git config --global user.em">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-09T12:41:23.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git基本操作">
+<meta name="twitter:description" content="1、安装与配置1.1、下载并安装https://msysgit.github.io 安装时：  Use git from git bash only..,其他默认下一步配置path: D:\Git\bin配置git：用户名和邮箱右键-git bash 12git config --global user.name &amp;quot;xxx&amp;quot;git config --global user.em">
+  <link rel="canonical" href="http://www.pniao.club/2019/10/09/git基本操作/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>git基本操作 | Sherlock的个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
+	<div class="bg_content" style="position: fixed; top: 0; z-index: -1; width: 100%; height: 100%;">
+	  <canvas id="canvas"></canvas>
+	</div>
+
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+	<a href="https://github.com/Sherlock-Shock" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sherlock的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">ONE胖次！！！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">2</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">6</span></a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">8</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off" autocorrect="off" autocapitalize="none"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    <div class="reading-progress-bar"></div>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/10/09/git基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sherlock">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sherlock的个人博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">git基本操作
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-09 20:00:14 / 修改时间：20:41:23" itemprop="dateCreated datePublished" datetime="2019-10-09T20:00:14+08:00">2019-10-09</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1、安装与配置"><a href="#1、安装与配置" class="headerlink" title="1、安装与配置"></a>1、安装与配置</h1><h2 id="1-1、下载并安装"><a href="#1-1、下载并安装" class="headerlink" title="1.1、下载并安装"></a>1.1、下载并安装</h2><p><a href="https://msysgit.github.io" target="_blank" rel="noopener">https://msysgit.github.io</a></p>
+<p>安装时：  Use git from git bash only..,其他默认下一步<br>配置path: D:\Git\bin<br>配置git：用户名和邮箱<br>右键-git bash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;xxxxxxx@qq.com&quot;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="1-2、配置ssh"><a href="#1-2、配置ssh" class="headerlink" title="1.2、配置ssh"></a>1.2、配置ssh</h2><p>搭建git服务器（远程仓库） ：统一的托管网站（<a href="https://github.com/）" target="_blank" rel="noopener">https://github.com/）</a></p>
+<p>为了 在本地 和远程仓库之间进行 免密钥登录，可以配置ssh </p>
+<p>现在本地生成ssh：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C xxxxxxxxxxxx@qq.com</span><br></pre></td></tr></table></figure>
+
+<p>  一直回车</p>
+<p>复制C:\Users\75275\.ssh\id_rsa.pub文件中的值</p>
+<p><strong>配置github</strong><br>github - settings - SSH and … - New SSH  - title任意、key中输入 刚才在本地生成的ssh：<br>将本地刚才生成的id_rsa.pub内容复制到远程的Key中</p>
+<p><strong>测试连通性：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果本地和远程成功通信，则可以在 /.ssh目录中 发现known_hosts文件</p>
+<p>如果不通，多尝试几次 ，检查key后面的回车符，查看防火墙，新建入站规则，开放22端口</p>
+<h1 id="2、发布项目"><a href="#2、发布项目" class="headerlink" title="2、发布项目"></a>2、发布项目</h1><p>在项目根目录右键 -git bash 输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>在github建立git项目<br>new-建立项目- 生成  <a href="https://github.com/xxxxx/xxxxx.git" target="_blank" rel="noopener">https://github.com/xxxxx/xxxxx.git</a></p>
+<p>本地项目-远程项目关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:Sherlock-Shock/springcloud-demo.git</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-1、第一次发布项目-（本地-远程）"><a href="#2-1、第一次发布项目-（本地-远程）" class="headerlink" title="2.1、第一次发布项目 （本地-远程）"></a>2.1、第一次发布项目 （本地-远程）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .      //文件-暂存区</span><br><span class="line">git commit -m &quot;注释内容&quot;  //暂存区-本地分支（默认master）</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2、第一次下载项目（远程-本地）"><a href="#2-2、第一次下载项目（远程-本地）" class="headerlink" title="2.2、第一次下载项目（远程-本地）"></a>2.2、第一次下载项目（远程-本地）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:xxxxxx/xxxxxxx.git</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3、提交-本地-远程"><a href="#2-3、提交-本地-远程" class="headerlink" title="2.3、提交(本地-远程)"></a>2.3、提交(本地-远程)</h2><p>(在当前工作目录 右键-git bash)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add.</span><br><span class="line">git commit -m &quot;提交到分支&quot;</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4、更新-远程-本地"><a href="#2-4、更新-远程-本地" class="headerlink" title="2.4、更新(远程-本地)"></a>2.4、更新(远程-本地)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5、新建分支操作"><a href="#2-5、新建分支操作" class="headerlink" title="2.5、新建分支操作"></a>2.5、新建分支操作</h2><h3 id="1-切换到基础分支"><a href="#1-切换到基础分支" class="headerlink" title="1) 切换到基础分支"></a>1) 切换到基础分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
+<h3 id="2）创建并切换到新分支"><a href="#2）创建并切换到新分支" class="headerlink" title="2）创建并切换到新分支"></a>2）创建并切换到新分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b lee</span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-更新分支代码并提交"><a href="#3-更新分支代码并提交" class="headerlink" title="3)更新分支代码并提交"></a>3)更新分支代码并提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;init lee&quot;</span><br><span class="line">git push origin lee</span><br></pre></td></tr></table></figure>
+
+<h1 id="3、git几个命令详解"><a href="#3、git几个命令详解" class="headerlink" title="3、git几个命令详解"></a>3、git几个命令详解</h1><h2 id="3-1、Git-add"><a href="#3-1、Git-add" class="headerlink" title="3.1、Git add"></a>3.1、Git add</h2><p>​     git add [参数] &lt;路径&gt;　作用就是将我们需要提交的代码从工作区添加到暂存区，就是告诉git系统，我们要提交哪些文件，之后就可以使用git commit命令进行提交了。</p>
+<p> 为了方便下面都用 . 来标识路径， . 表示当前目录，路径可以修改，下列操作的作用范围都在版本库之内。 </p>
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add ."></a>git add .</h3><p> 不加参数默认为将修改操作的文件和未跟踪新添加的文件添加到git系统的暂存区，注意不包括删除</p>
+<h3 id="git-add-u"><a href="#git-add-u" class="headerlink" title="git add -u ."></a>git add -u .</h3><p> -u 表示将已跟踪文件中的修改和删除的文件添加到暂存区，不包括新增加的文件，注意这些被删除的文件被加入到暂存区再被提交并推送到服务器的版本库之后这个文件就会从git系统中消失了。</p>
+<h3 id="git-add-A"><a href="#git-add-A" class="headerlink" title="git add -A ."></a>git add -A .</h3><p> -A 表示将所有的已跟踪的文件的修改与删除和新增的未跟踪的文件都添加到暂存区。</p>
+<h2 id="3-2、Git-commit"><a href="#3-2、Git-commit" class="headerlink" title="3.2、Git commit"></a>3.2、Git commit</h2><p>​    git commit 主要是将暂存区里的改动给提交到本地的版本库。每次使用git commit 命令我们都会在本地版本库生成一个40位的哈希值，这个哈希值也叫commit-id，<br>  commit-id 在版本回退的时候是非常有用的，它相当于一个快照,可以在未来的任何时候通过与git reset的组合命令回到这里.</p>
+<h3 id="git-commit-m-‘message’"><a href="#git-commit-m-‘message’" class="headerlink" title="git commit -m ‘message’"></a>git commit -m ‘message’</h3><p> -m 参数表示可以直接输入后面的“message”，如果不加 -m参数，那么是不能直接输入message的，而是会调用一个编辑器一般是vim来让你输入这个message，<br> message即是我们用来简要说明这次提交的语句。</p>
+<h3 id="git-commit-am-‘message’-am等同于-a-m"><a href="#git-commit-am-‘message’-am等同于-a-m" class="headerlink" title="git commit -am ‘message’ -am等同于-a -m"></a>git commit -am ‘message’ -am等同于-a -m</h3><p> -a参数可以将所有已跟踪文件中的执行修改或删除操作的文件都提交到本地仓库，即使它们没有经过git add添加到暂存区，<br> <em>注意:</em> 新加的文件（即没有被git系统管理的文件）是不能被提交到本地仓库的。</p>
+<h2 id="3-3、Git-push"><a href="#3-3、Git-push" class="headerlink" title="3.3、Git push"></a>3.3、Git push</h2><p>​    在使用git commit命令将修改从暂存区提交到本地版本库后，只剩下最后一步将本地版本库的分支推送到远程服务器上对应的分支了，如果不清楚版本库的构成，可以查看我的另一篇，git 仓库的基本结构。<br>   git push的一般形式为 git push &lt;远程主机名&gt; &lt;本地分支名&gt; &lt;远程分支名&gt; ，例如 git push origin master：refs/for/master ，即是将本地的master分支推送到远程主机origin上的对应master分支， origin 是远程主机名。第一个master是本地分支名，第二个master是远程分支名。</p>
+<h3 id="git-push-origin-master"><a href="#git-push-origin-master" class="headerlink" title="git push origin master"></a>git push origin master</h3><p> 如果远程分支被省略，如上则表示将本地分支推送到与之存在追踪关系的远程分支（通常两者同名），如果该远程分支不存在，则会被新建</p>
+<h3 id="git-push-origin-：refs-for-master"><a href="#git-push-origin-：refs-for-master" class="headerlink" title="git push origin ：refs/for/master"></a>git push origin ：refs/for/master</h3><p> 如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，等同于 git push origin –delete master</p>
+<h3 id="git-push-origin"><a href="#git-push-origin" class="headerlink" title="git push origin"></a>git push origin</h3><p> 如果当前分支与远程分支存在追踪关系，则本地分支和远程分支都可以省略，将当前分支推送到origin主机的对应分支</p>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><p> 如果当前分支只有一个远程分支，那么主机名都可以省略，形如 git push，可以使用git branch -r ，查看远程的分支名</p>
+<p><strong>关于 refs/for：</strong><br> refs/for 的意义在于我们提交代码到服务器之后是需要经过code review 之后才能进行merge的，而refs/heads 不需要</p>
+<p><em>来源：<a href="https://www.jianshu.com/p/2e1d551b8261" target="_blank" rel="noopener">https://www.jianshu.com/p/2e1d551b8261</a></em></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="Sherlock 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/06/springboot2-redis-fastjson/" rel="next" title="springboot2+redis+fastjson">
+                  <i class="fa fa-chevron-left"></i> springboot2+redis+fastjson
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjExMy8yMjYyNA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/header.jpg"
+      alt="Sherlock">
+  <p class="site-author-name" itemprop="name">Sherlock</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Sherlock-Shock" title="GitHub &rarr; https://github.com/Sherlock-Shock" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/u/5613372680" title="微博 &rarr; https://weibo.com/u/5613372680" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、安装与配置"><span class="nav-text">1、安装与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1、下载并安装"><span class="nav-text">1.1、下载并安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2、配置ssh"><span class="nav-text">1.2、配置ssh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、发布项目"><span class="nav-text">2、发布项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1、第一次发布项目-（本地-远程）"><span class="nav-text">2.1、第一次发布项目 （本地-远程）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2、第一次下载项目（远程-本地）"><span class="nav-text">2.2、第一次下载项目（远程-本地）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3、提交-本地-远程"><span class="nav-text">2.3、提交(本地-远程)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4、更新-远程-本地"><span class="nav-text">2.4、更新(远程-本地)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5、新建分支操作"><span class="nav-text">2.5、新建分支操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-切换到基础分支"><span class="nav-text">1) 切换到基础分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）创建并切换到新分支"><span class="nav-text">2）创建并切换到新分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更新分支代码并提交"><span class="nav-text">3)更新分支代码并提交</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、git几个命令详解"><span class="nav-text">3、git几个命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1、Git-add"><span class="nav-text">3.1、Git add</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-text">git add .</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add-u"><span class="nav-text">git add -u .</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add-A"><span class="nav-text">git add -A .</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2、Git-commit"><span class="nav-text">3.2、Git commit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-m-‘message’"><span class="nav-text">git commit -m ‘message’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-am-‘message’-am等同于-a-m"><span class="nav-text">git commit -am ‘message’ -am等同于-a -m</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3、Git-push"><span class="nav-text">3.3、Git push</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push-origin-master"><span class="nav-text">git push origin master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push-origin-：refs-for-master"><span class="nav-text">git push origin ：refs/for/master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push-origin"><span class="nav-text">git push origin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-text">git push</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+	  
+	  
+	  
+	  
+    </div>
+	
+	
+	
+  </aside>
+  
+  
+  
+  <div id="sidebar-dimmer">
+  
+  
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank">粤ICP备19064639号 </a>&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sherlock</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/reading_progress/reading_progress.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+  
+  
+	<link rel="stylesheet" href="/dist/APlayer.min.css">
+	<div id="aplayer"></div>
+	<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+	<script type="text/javascript" src="/dist/music.js"></script>
+  
+  
+  
+  
+	
+  
+      <script type="text/javascript" src="/js/src/clicklove.js"></script>
+	
+	
+  <script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+  <!--崩溃欺骗-->
+  <script type="text/javascript" src="/js/src/crash_cheat.js"></script>
+</body>
+</html>
