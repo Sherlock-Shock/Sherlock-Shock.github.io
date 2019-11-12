@@ -55,19 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="一.pom.xml引入1234567891011&amp;lt;!--引入Redis--&amp;gt;        &amp;lt;dependency&amp;gt;            &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;            &amp;lt;artifactId&amp;gt;spring-boot-starter-data-redis&amp;lt">
-<meta name="keywords" content="学习笔记">
+  <meta name="description" content="1、慢查询日志12345678-- 查看是否开启慢查询日志show VARIABLES like &amp;apos;%slow_query_log%&amp;apos;;-- 开启慢查询日志set GLOBAL slow_query_log=1;-- 查看慢查询时间show GLOBAL VARIABLES like &amp;apos;%long_query_time%&amp;apos;;-- 设置慢查询时间（超过3秒即为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springboot2+redis+fastjson">
-<meta property="og:url" content="http://www.pniao.club/2019/10/06/springboot2-redis-fastjson/index.html">
+<meta property="og:title" content="MySQL慢查询日志及批量脚本">
+<meta property="og:url" content="http://www.pniao.club/2019/11/12/MySQL慢查询日志及批量脚本/index.html">
 <meta property="og:site_name" content="Sherlock的个人博客">
-<meta property="og:description" content="一.pom.xml引入1234567891011&amp;lt;!--引入Redis--&amp;gt;        &amp;lt;dependency&amp;gt;            &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;            &amp;lt;artifactId&amp;gt;spring-boot-starter-data-redis&amp;lt">
+<meta property="og:description" content="1、慢查询日志12345678-- 查看是否开启慢查询日志show VARIABLES like &amp;apos;%slow_query_log%&amp;apos;;-- 开启慢查询日志set GLOBAL slow_query_log=1;-- 查看慢查询时间show GLOBAL VARIABLES like &amp;apos;%long_query_time%&amp;apos;;-- 设置慢查询时间（超过3秒即为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-06T05:37:59.312Z">
+<meta property="og:updated_time" content="2019-11-12T14:38:02.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="springboot2+redis+fastjson">
-<meta name="twitter:description" content="一.pom.xml引入1234567891011&amp;lt;!--引入Redis--&amp;gt;        &amp;lt;dependency&amp;gt;            &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;            &amp;lt;artifactId&amp;gt;spring-boot-starter-data-redis&amp;lt">
-  <link rel="canonical" href="http://www.pniao.club/2019/10/06/springboot2-redis-fastjson/">
+<meta name="twitter:title" content="MySQL慢查询日志及批量脚本">
+<meta name="twitter:description" content="1、慢查询日志12345678-- 查看是否开启慢查询日志show VARIABLES like &amp;apos;%slow_query_log%&amp;apos;;-- 开启慢查询日志set GLOBAL slow_query_log=1;-- 查看慢查询时间show GLOBAL VARIABLES like &amp;apos;%long_query_time%&amp;apos;;-- 设置慢查询时间（超过3秒即为">
+  <link rel="canonical" href="http://www.pniao.club/2019/11/12/MySQL慢查询日志及批量脚本/">
 
 
 <script id="page-configurations">
@@ -81,7 +80,7 @@
   };
 </script>
 
-  <title>springboot2+redis+fastjson | Sherlock的个人博客</title>
+  <title>MySQL慢查询日志及批量脚本 | Sherlock的个人博客</title>
   
 
 
@@ -264,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/10/06/springboot2-redis-fastjson/">
+    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/11/12/MySQL慢查询日志及批量脚本/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sherlock">
@@ -278,7 +277,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">springboot2+redis+fastjson
+          <h1 class="post-title" itemprop="name headline">MySQL慢查询日志及批量脚本
 
             
           </h1>
@@ -295,7 +294,7 @@
                 
               
 
-              <time title="创建时间：2019-10-06 13:28:30 / 修改时间：13:37:59" itemprop="dateCreated datePublished" datetime="2019-10-06T13:28:30+08:00">2019-10-06</time>
+              <time title="创建时间：2019-11-12 22:19:31 / 修改时间：22:38:02" itemprop="dateCreated datePublished" datetime="2019-11-12T22:19:31+08:00">2019-11-12</time>
             </span>
           
             
@@ -308,7 +307,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Springboot/" itemprop="url" rel="index"><span itemprop="name">Springboot</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a></span>
 
                 
                 
@@ -335,13 +334,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="一-pom-xml引入"><a href="#一-pom-xml引入" class="headerlink" title="一.pom.xml引入"></a>一.pom.xml引入</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--引入Redis--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- fastjson --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.58<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        <h1 id="1、慢查询日志"><a href="#1、慢查询日志" class="headerlink" title="1、慢查询日志"></a>1、慢查询日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看是否开启慢查询日志</span><br><span class="line">show VARIABLES like &apos;%slow_query_log%&apos;;</span><br><span class="line">-- 开启慢查询日志</span><br><span class="line">set GLOBAL slow_query_log=1;</span><br><span class="line">-- 查看慢查询时间</span><br><span class="line">show GLOBAL VARIABLES like &apos;%long_query_time%&apos;;</span><br><span class="line">-- 设置慢查询时间（超过3秒即为慢查询）</span><br><span class="line">set GLOBAL long_query_time=3;</span><br></pre></td></tr></table></figure>
 
+<p><strong>*<u>慢查询日志位于D:\mysql-8.0.15-winx64\Data\主机名-slow.log</u>*</strong></p>
 <a id="more"></a>
 
-<h1 id="二-实体类"><a href="#二-实体类" class="headerlink" title="二.实体类"></a>二.实体类</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">manager</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mid;</span><br><span class="line">    <span class="keyword">private</span> String psw;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">manager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">manager</span><span class="params">(<span class="keyword">int</span> mid, String psw, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mid = mid;</span><br><span class="line">        <span class="keyword">this</span>.psw = psw;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMid</span><span class="params">(<span class="keyword">int</span> mid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mid = mid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPsw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> psw;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPsw</span><span class="params">(String psw)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.psw = psw;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2、批量插入脚本"><a href="#2、批量插入脚本" class="headerlink" title="2、批量插入脚本"></a>2、批量插入脚本</h1><p><strong>测试表结构：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS `course`;</span><br><span class="line">CREATE TABLE `course`  (</span><br><span class="line">  `cid` int(10) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `cname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,</span><br><span class="line">  `tid` int(10) NULL DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`cid`) USING BTREE</span><br><span class="line">) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;</span><br><span class="line"></span><br><span class="line">SET FOREIGN_KEY_CHECKS = 1;</span><br></pre></td></tr></table></figure>
 
-<h1 id="三-编写接口"><a href="#三-编写接口" class="headerlink" title="三.编写接口"></a>三.编写接口</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;manager&gt; <span class="title">queryAllManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String managerJson = stringRedisTemplate.opsForValue().get(<span class="string">"manager"</span>);<span class="comment">//先查缓存</span></span><br><span class="line">        <span class="comment">//List&lt;manager&gt; managerList = JSONObject.parseArray(managerJson,manager.class);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">null</span>==managerJson) &#123;    <span class="comment">//没有就查数据库</span></span><br><span class="line">            <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;  <span class="comment">//放行一个</span></span><br><span class="line">                managerJson = stringRedisTemplate.opsForValue().get(<span class="string">"manager"</span>);</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">null</span>==managerJson) &#123;</span><br><span class="line"></span><br><span class="line">                    List&lt;manager&gt; managers = managerMapper.queryAll();</span><br><span class="line">                    managerJson=JSONObject.toJSONString(managers);</span><br><span class="line"></span><br><span class="line">                    System.out.println(<span class="string">"--------在数据库中查询"</span> + managerJson);</span><br><span class="line"></span><br><span class="line">                    stringRedisTemplate.opsForValue().set(<span class="string">"manager"</span>,managerJson);</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"在缓存中获取..."</span>+managerJson);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> JSONObject.parseArray(managerJson,manager.class);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="（1）创建随机字符串函数与随机数函数："><a href="#（1）创建随机字符串函数与随机数函数：" class="headerlink" title="（1）创建随机字符串函数与随机数函数："></a>（1）创建随机字符串函数与随机数函数：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-- 随机字符串函数</span><br><span class="line">DELIMITER $$</span><br><span class="line">CREATE FUNCTION rand_string(n INT)</span><br><span class="line">RETURNS VARCHAR(255)</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE chars_str varchar(100) DEFAULT &apos;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;;</span><br><span class="line">    DECLARE return_str varchar(255) DEFAULT &apos;&apos;;</span><br><span class="line">    DECLARE i INT DEFAULT 0;</span><br><span class="line">    WHILE i &lt; n DO</span><br><span class="line">        SET return_str = concat(return_str,substring(chars_str , FLOOR(1 + RAND()*52 ),1));</span><br><span class="line">        SET i = i +1;</span><br><span class="line">    END WHILE;</span><br><span class="line">    RETURN return_str;</span><br><span class="line">END $$</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line">-- 随机数函数</span><br><span class="line">DELIMITER $$</span><br><span class="line">CREATE FUNCTION rand_num()</span><br><span class="line">RETURNS INT(5)</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE i INT DEFAULT 0;</span><br><span class="line">    SET i = FLOOR(1+RAND()*10);</span><br><span class="line">    RETURN i;</span><br><span class="line">END $$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<h2 id="（2）创建存储过程："><a href="#（2）创建存储过程：" class="headerlink" title="（2）创建存储过程："></a>（2）创建存储过程：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE insert_course(IN max_num INT(10))</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE i INT DEFAULT 0;</span><br><span class="line">		SET autocommit = 0;</span><br><span class="line">		REPEAT</span><br><span class="line">		SET i = i+1;</span><br><span class="line">    INSERT INTO course(cname,tid) VALUES(rand_string(6),rand_num());</span><br><span class="line">   UNTIL i=max_num</span><br><span class="line">	 END REPEAT;</span><br><span class="line">		COMMIT; </span><br><span class="line">END $$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<h2 id="（3）调用存储过程："><a href="#（3）调用存储过程：" class="headerlink" title="（3）调用存储过程："></a>（3）调用存储过程：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 必须设置此参数</span><br><span class="line">set GLOBAL log_bin_trust_function_creators = 1;</span><br><span class="line">-- 插入50w条数据</span><br><span class="line">CALL insert_course(500000);</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -370,23 +375,14 @@
       
 
       <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
-            
-          </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/29/Spring Boot入门/" rel="next" title="Springboot入门">
-                  <i class="fa fa-chevron-left"></i> Springboot入门
+                <a href="/2019/10/16/MYSQL远程连接问题/" rel="next" title="连接远程服务器docker下的mysql问题">
+                  <i class="fa fa-chevron-left"></i> 连接远程服务器docker下的mysql问题
                 </a>
               
             </div>
@@ -394,10 +390,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/10/09/git基本操作/" rel="prev" title="git基本操作">
-                  git基本操作 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -556,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-pom-xml引入"><span class="nav-text">一.pom.xml引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-实体类"><span class="nav-text">二.实体类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-编写接口"><span class="nav-text">三.编写接口</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、慢查询日志"><span class="nav-text">1、慢查询日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、批量插入脚本"><span class="nav-text">2、批量插入脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（1）创建随机字符串函数与随机数函数："><span class="nav-text">（1）创建随机字符串函数与随机数函数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（2）创建存储过程："><span class="nav-text">（2）创建存储过程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（3）调用存储过程："><span class="nav-text">（3）调用存储过程：</span></a></li></ol></li></ol></div>
             
 
           </div>
