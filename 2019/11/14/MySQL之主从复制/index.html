@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="1.错误消息：public String testDateTimeFormat(Student student, BindingResult result ,Map&amp;lt;String,Object&amp;gt; map) {} 需要验证的数据是 Student中的birthday, SPringMVC要求,如果校验失败 ,则将错误信息自动放入该对象之后紧挨着的BindingResult中。即Stude">
-<meta name="keywords" content="学习笔记">
+  <meta name="description" content="1、基本原理及环境基本原理1.master将改变的数 记录在本地的 二进制日志中（binary log） ；该过程 称之为：二进制日志事件 2.slave将master的binary log拷贝到自己的 relay log（中继日志文件）中 3.中继日志事件，将数据读取到自己的数据库之中 MYSQL主从复制 是异步的，串行化的， 有延迟">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[SpringMVC]之数据处理">
-<meta property="og:url" content="http://www.pniao.club/2019/09/18/SpringMVC-之数据处理/index.html">
+<meta property="og:title" content="MySQL之主从复制">
+<meta property="og:url" content="http://www.pniao.club/2019/11/14/MySQL之主从复制/index.html">
 <meta property="og:site_name" content="Sherlock的个人博客">
-<meta property="og:description" content="1.错误消息：public String testDateTimeFormat(Student student, BindingResult result ,Map&amp;lt;String,Object&amp;gt; map) {} 需要验证的数据是 Student中的birthday, SPringMVC要求,如果校验失败 ,则将错误信息自动放入该对象之后紧挨着的BindingResult中。即Stude">
+<meta property="og:description" content="1、基本原理及环境基本原理1.master将改变的数 记录在本地的 二进制日志中（binary log） ；该过程 称之为：二进制日志事件 2.slave将master的binary log拷贝到自己的 relay log（中继日志文件）中 3.中继日志事件，将数据读取到自己的数据库之中 MYSQL主从复制 是异步的，串行化的， 有延迟">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-18T05:25:16.361Z">
+<meta property="og:updated_time" content="2019-11-14T09:07:53.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[SpringMVC]之数据处理">
-<meta name="twitter:description" content="1.错误消息：public String testDateTimeFormat(Student student, BindingResult result ,Map&amp;lt;String,Object&amp;gt; map) {} 需要验证的数据是 Student中的birthday, SPringMVC要求,如果校验失败 ,则将错误信息自动放入该对象之后紧挨着的BindingResult中。即Stude">
-  <link rel="canonical" href="http://www.pniao.club/2019/09/18/SpringMVC-之数据处理/">
+<meta name="twitter:title" content="MySQL之主从复制">
+<meta name="twitter:description" content="1、基本原理及环境基本原理1.master将改变的数 记录在本地的 二进制日志中（binary log） ；该过程 称之为：二进制日志事件 2.slave将master的binary log拷贝到自己的 relay log（中继日志文件）中 3.中继日志事件，将数据读取到自己的数据库之中 MYSQL主从复制 是异步的，串行化的， 有延迟">
+  <link rel="canonical" href="http://www.pniao.club/2019/11/14/MySQL之主从复制/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>[SpringMVC]之数据处理 | Sherlock的个人博客</title>
+  <title>MySQL之主从复制 | Sherlock的个人博客</title>
   
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/09/18/SpringMVC-之数据处理/">
+    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/11/14/MySQL之主从复制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sherlock">
@@ -278,7 +278,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">[SpringMVC]之数据处理
+          <h1 class="post-title" itemprop="name headline">MySQL之主从复制
 
             
           </h1>
@@ -295,7 +295,7 @@
                 
               
 
-              <time title="创建时间：2019-09-18 13:13:45 / 修改时间：13:25:16" itemprop="dateCreated datePublished" datetime="2019-09-18T13:13:45+08:00">2019-09-18</time>
+              <time title="创建时间：2019-11-14 16:28:21 / 修改时间：17:07:53" itemprop="dateCreated datePublished" datetime="2019-11-14T16:28:21+08:00">2019-11-14</time>
             </span>
           
             
@@ -308,7 +308,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringMVC/" itemprop="url" rel="index"><span itemprop="name">SpringMVC</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a></span>
 
                 
                 
@@ -335,37 +335,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-错误消息："><a href="#1-错误消息：" class="headerlink" title="1.错误消息："></a>1.错误消息：</h1><p>public String testDateTimeFormat(Student student, <strong>BindingResult result</strong> ,Map&lt;String,Object&gt; map) {}</p>
-<p>需要验证的数据是 Student中的birthday, SPringMVC要求,如果校验失败 ,则将错误信息自动放入该对象之后紧挨着的BindingResult中。<br>即Student student, BindingResult result之间 不能有其他参数。</p>
-<p>如果要将控制台的错误消息 传到jsp中显示，则可以将 错误消息对象放入request域中，然后 在jsp中 从request中获取。</p>
+        <h1 id="1、基本原理及环境"><a href="#1、基本原理及环境" class="headerlink" title="1、基本原理及环境"></a>1、基本原理及环境</h1><h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p>1.master将改变的数 记录在本地的 二进制日志中（binary log） ；该过程 称之为：二进制日志事件</p>
+<p>2.slave将master的binary log拷贝到自己的 relay log（中继日志文件）中</p>
+<p>3.中继日志事件，将数据读取到自己的数据库之中</p>
+<p><strong>MYSQL主从复制 是异步的，串行化的， 有延迟</strong></p>
 <a id="more"></a>
 
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>首先，MySQL版本要一致</p>
+<p>主机：Window10 win版mysql8</p>
+<p>从机：虚拟机centos7 docker镜像的mysql8</p>
+<p><strong>注意：要将两个系统的防火墙关闭并且两机能相互ping通</strong></p>
+<h1 id="2、主机配置"><a href="#2、主机配置" class="headerlink" title="2、主机配置"></a>2、主机配置</h1><p>找到MySQL的配置文件（my.ini）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#id唯一</span></span><br><span class="line"><span class="attr">server-id</span>=<span class="number">1</span></span><br><span class="line"><span class="comment">#二进制日志文件（注意是/  不是\）</span></span><br><span class="line"><span class="attr">log-bin</span>=<span class="string">"D:/mysql-8.0.15-winx64/Data/binlog"</span></span><br><span class="line"><span class="comment">#错误记录文件</span></span><br><span class="line"><span class="comment">#log-error="D:/MySQL/MySQL Server 5.5/data/mysql-error"</span></span><br><span class="line"><span class="comment">#主从同步时 忽略的数据库</span></span><br><span class="line"><span class="attr">binlog-ignore-db</span>=mysql</span><br><span class="line"><span class="comment">#(可选)指定主从同步时，同步哪些数据库</span></span><br><span class="line"><span class="comment">#binlog-do-db=test</span></span><br></pre></td></tr></table></figure>
 
+<p>配置完成后要重启MySQL服务</p>
+<p>然后创建用户主从复制要用的用户并授权：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'zs'</span>@<span class="string">'192.168.1.xxx'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123456'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'zs'</span>@<span class="string">'192.168.1.xxx'</span>;</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br></pre></td></tr></table></figure>
 
-<h1 id="2-数据校验"><a href="#2-数据校验" class="headerlink" title="2. 数据校验"></a>2. 数据校验</h1><pre><code>JSR303  
-Hibernate Validator </code></pre><p><strong>使用Hibernate Validator步骤：</strong></p>
-<h2 id="jar（注意各个jar之间可能存在版本不兼容）"><a href="#jar（注意各个jar之间可能存在版本不兼容）" class="headerlink" title="jar（注意各个jar之间可能存在版本不兼容）"></a>jar（注意各个jar之间可能存在版本不兼容）</h2><p>hibernate-validator-5.0.0.CR2.jar     classmate-0.8.0.jar </p>
-<p>jboss-logging-3.1.1.GA.jar</p>
-<p>validation-api-1.1.0.CR1.jar     </p>
-<p>hibernate-validator-annotation-processor-5.0.0.CR2.jar</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><pre><code>&lt;mvc:annotation-driven &gt;&lt;/mvc:annotation-driven&gt;</code></pre><p>此时mvc:annotation-driven的作用：要实现Hibernate Validator/JSR303 校验（或者其他各种校验），必须实现SpringMVC提供的一个接口：ValidatorFactory</p>
-<p>LocalValidatorFactoryBean是ValidatorFactory的一个实现类。<br>&lt;mvc:annotation-driven &gt;会在springmvc容器中 自动加载一个LocalValidatorFactoryBean类，因此可以直接实现数据校验。</p>
-<h2 id="直接使用注解"><a href="#直接使用注解" class="headerlink" title="直接使用注解"></a>直接使用注解</h2><pre><code>public class Student {
+<p>查看主机状态：记住File和Position</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show master status;</span><br></pre></td></tr></table></figure>
 
-    @Past//当前时间以前
-    private Date birthday ;
-}</code></pre><p>在校验的Controller中 ，给校验的对象前增加 @Valid</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public String testDateTimeFormat(@Valid Student student, BindingResult result ,Map&lt;String,Object&gt; map) &#123;</span><br><span class="line">                &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：完成后不要在主机上进行操作了，避免position发生变化</strong></p>
+<h1 id="3、从机配置"><a href="#3、从机配置" class="headerlink" title="3、从机配置"></a>3、从机配置</h1><p>启动docker的MySQL容器，进入容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 627a2368c865 /bin/bash</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-Ajax请求SpringMVC，并且返回JSON格式的数据"><a href="#3-Ajax请求SpringMVC，并且返回JSON格式的数据" class="headerlink" title="3.Ajax请求SpringMVC，并且返回JSON格式的数据"></a>3.Ajax请求SpringMVC，并且返回JSON格式的数据</h1><h2 id="jar包"><a href="#jar包" class="headerlink" title="jar包"></a>jar包</h2><p>jackson-annotations-2.8.9.jar</p>
-<p>jackson-core-2.8.9.jar</p>
-<p>jackson-databind-2.8.9.jar</p>
-<h2 id="配置controller"><a href="#配置controller" class="headerlink" title="配置controller"></a>配置controller</h2><p>@ResponseBod修饰的方法，会将该方法的返回值 以一个json数组的形式返回给前台</p>
-<p>@ResponseBody//告诉SpringMVC，此时的返回 不是一个 View页面，而是一个 ajax调用的返回值（Json数组）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value=&quot;testJson&quot;)</span><br><span class="line">public List&lt;Student&gt; testJson() &#123;</span><br><span class="line">	//Controller-Service-dao</span><br><span class="line">	//StudentService studentService = new StudentServiceImp();</span><br><span class="line">          //List&lt;Student&gt; students =  studentService.qeuryAllStudent();</span><br><span class="line">	//模拟调用service的查询操作</span><br><span class="line">	</span><br><span class="line">	...</span><br><span class="line">	List&lt;Student&gt; students = new ArrayList&lt;&gt;();</span><br><span class="line">	students.add(stu1) ;</span><br><span class="line">	students.add(stu2) ;</span><br><span class="line">	students.add(stu3) ;</span><br><span class="line">	</span><br><span class="line">	return students;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>cd /etc/mysql</code>切换到/etc/mysql目录下，然后<code>vi my.cnf</code>对my.cnf进行编辑。此时会报出<code>bash: vi: command not found</code>，需要我们在docker容器内部自行安装vim。使用<code>apt-get install vim</code>命令安装vim</p>
+<p>会出现如下问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">E: Unable to locate package vim</span><br></pre></td></tr></table></figure>
 
-<p>前台：服务端将返回值结果 以json数组的形式 传给了result。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#testJson&quot;).click(function()&#123;</span><br><span class="line">					//通过ajax请求springmvc</span><br><span class="line">					$.post(</span><br><span class="line">						&quot;handler/testJson&quot;,//服务器地址</span><br><span class="line">						//&#123;&quot;name&quot;:&quot;zs&quot;,&quot;age&quot;:23&#125;</span><br><span class="line">						function(result)&#123;//服务端处理完毕后的回调函数 List&lt;Student&gt; students， 加上@ResponseBody后， students实质是一个json数组的格式</span><br><span class="line">							for(var i=0;i&lt;result.length ;i++)&#123;</span><br><span class="line">								alert(result[i].id +&quot;-&quot;+result[i].name +&quot;-&quot;+result[i].age);</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;</span><br><span class="line">					);</span><br></pre></td></tr></table></figure>
+<p>执行<code>apt-get update</code>，然后再次执行<code>apt-get install vim</code>即可成功安装vim。然后我们就可以使用vim编辑my.cnf，在my.cnf中添加如下配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment">## 同一局域网内注意要唯一</span></span><br><span class="line"><span class="attr">server-id</span>=<span class="number">2</span>  </span><br><span class="line"><span class="comment">## 开启二进制日志功能，可以随便取（关键）</span></span><br><span class="line"><span class="attr">log-bin</span>=mysql-bin</span><br></pre></td></tr></table></figure>
+
+<p>保存后重启mysql服务</p>
+<p>然后执行以下SQL语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">change</span> <span class="keyword">master</span> <span class="keyword">to</span></span><br><span class="line"><span class="comment">-- 主机ip</span></span><br><span class="line">master_host=<span class="string">'192.168.1.102'</span>,</span><br><span class="line">master_port=<span class="number">3306</span>,</span><br><span class="line">master_user=<span class="string">'zs'</span>,</span><br><span class="line">master_password=<span class="string">'123456'</span>,</span><br><span class="line"><span class="comment">-- 刚刚要求记住的两个属性（日志文件和起点）</span></span><br><span class="line">master_log_file=<span class="string">'binlog.000041'</span>,</span><br><span class="line">master_log_pos=<span class="number">884</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后启动主从复制：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">slave</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看状态：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>;</span><br></pre></td></tr></table></figure>
+
+<p> 如果Slave_IO_Running和 Slave_SQL_Running均为Yes即成功（我自己试验过程中没有关闭windows防火墙，导致出现Slave_IO_Running为connecting，解决办法是执行<code>stop slave;</code>之后关闭防火墙，再<code>start slave;</code>就行了）</p>
+<h1 id="4、测试"><a href="#4、测试" class="headerlink" title="4、测试"></a>4、测试</h1><p>测试很简单，在主机上新建一个库，新建一行表，添加一行数据，看看从机有没有同步就完事了。</p>
+<p>本文参考：<a href="https://www.cnblogs.com/songwenjie/p/9371422.html" target="_blank" rel="noopener">https://www.cnblogs.com/songwenjie/p/9371422.html</a></p>
+
     </div>
 
     
@@ -397,7 +411,7 @@ Hibernate Validator </code></pre><p><strong>使用Hibernate Validator步骤：</
           
           <div class="post-tags">
             
-              <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
             
           </div>
         
@@ -407,8 +421,8 @@ Hibernate Validator </code></pre><p><strong>使用Hibernate Validator步骤：</
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/17/SpringMVC-之InternalResourceViewResolver/" rel="next" title="[SpringMVC]之InternalResourceViewResolver">
-                  <i class="fa fa-chevron-left"></i> [SpringMVC]之InternalResourceViewResolver
+                <a href="/2019/11/12/MySQL慢查询日志及批量脚本/" rel="next" title="MySQL慢查询日志及批量脚本">
+                  <i class="fa fa-chevron-left"></i> MySQL慢查询日志及批量脚本
                 </a>
               
             </div>
@@ -416,10 +430,6 @@ Hibernate Validator </code></pre><p><strong>使用Hibernate Validator步骤：</
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/29/Spring Boot入门/" rel="prev" title="Springboot入门">
-                  Springboot入门 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -580,7 +590,7 @@ Hibernate Validator </code></pre><p><strong>使用Hibernate Validator步骤：</
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-错误消息："><span class="nav-text">1.错误消息：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-数据校验"><span class="nav-text">2. 数据校验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jar（注意各个jar之间可能存在版本不兼容）"><span class="nav-text">jar（注意各个jar之间可能存在版本不兼容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接使用注解"><span class="nav-text">直接使用注解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Ajax请求SpringMVC，并且返回JSON格式的数据"><span class="nav-text">3.Ajax请求SpringMVC，并且返回JSON格式的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jar包"><span class="nav-text">jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置controller"><span class="nav-text">配置controller</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、基本原理及环境"><span class="nav-text">1、基本原理及环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本原理"><span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-text">环境</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、主机配置"><span class="nav-text">2、主机配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、从机配置"><span class="nav-text">3、从机配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、测试"><span class="nav-text">4、测试</span></a></li></ol></div>
             
 
           </div>
