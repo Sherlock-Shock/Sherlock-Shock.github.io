@@ -4,6 +4,12 @@ const ap = new APlayer({
     autoplay: false,
     audio: [
 	 {
+        name: 'A Theme of ONE PUNCH MAN ~正義執行~',
+        artist: 'One Punch',
+        url: 'https://music.163.com/song/media/outer/url?id=1426242580.mp3',
+        cover: '/images/music/onePunch.png',
+      },
+	 {
         name: 'Another Day Of Sun (From "La La Land" Soundtrack)',
         artist: 'La La Land Cast',
         url: 'https://music.163.com/song/media/outer/url?id=445867332.mp3',
