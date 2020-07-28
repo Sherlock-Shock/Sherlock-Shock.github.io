@@ -63,13 +63,13 @@
 <meta property="og:site_name" content="Sherlock的个人博客">
 <meta property="og:description" content="1.运行时数据区域">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="d:%5CpersonBlog%5Cblog%5Csource_posts%5C%E5%85%B3%E4%BA%8EJVM%5CJVM.jpg">
-<meta property="og:image" content="d:%5CpersonBlog%5Cblog%5Csource_posts%5C%E5%85%B3%E4%BA%8EJVM%5C%E5%A0%86.jpg">
-<meta property="og:updated_time" content="2020-07-28T09:46:58.995Z">
+<meta property="og:image" content="http://www.pniao.club/2020/07/28/关于JVM/JVM.jpg">
+<meta property="og:image" content="http://www.pniao.club/2020/07/28/关于JVM/%E5%A0%86.jpg">
+<meta property="og:updated_time" content="2020-07-28T09:52:12.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于JVM">
 <meta name="twitter:description" content="1.运行时数据区域">
-<meta name="twitter:image" content="d:%5CpersonBlog%5Cblog%5Csource_posts%5C%E5%85%B3%E4%BA%8EJVM%5CJVM.jpg">
+<meta name="twitter:image" content="http://www.pniao.club/2020/07/28/关于JVM/JVM.jpg">
   <link rel="canonical" href="http://www.pniao.club/2020/07/28/关于JVM/">
 
 
@@ -298,7 +298,7 @@
                 
               
 
-              <time title="创建时间：2020-07-28 17:11:59 / 修改时间：17:46:58" itemprop="dateCreated datePublished" datetime="2020-07-28T17:11:59+08:00">2020-07-28</time>
+              <time title="创建时间：2020-07-28 17:11:59 / 修改时间：17:52:12" itemprop="dateCreated datePublished" datetime="2020-07-28T17:11:59+08:00">2020-07-28</time>
             </span>
           
             
@@ -340,12 +340,12 @@
       
         <h1 id="1-运行时数据区域"><a href="#1-运行时数据区域" class="headerlink" title="1.运行时数据区域"></a>1.运行时数据区域</h1><a id="more"></a>
 
-<p><img src="D:%5CpersonBlog%5Cblog%5Csource_posts%5C%E5%85%B3%E4%BA%8EJVM%5CJVM.jpg" alt></p>
+<p><img src="JVM.jpg" alt></p>
 <p><strong>1、程序计数器：</strong>指向当前线程正在执行的字节码指令。线程私有的。<br><strong>2、虚拟机栈：</strong>虚拟机栈是Java执行方法的内存模型。每个方法被执行的时候，都会创建一个栈帧，把栈帧压人栈，当方法正常返回或者抛出未捕获的异常时，栈帧就会出栈，线程私有。<br><strong>3、本地方法栈：</strong><br>（1）调用本地native的内存模型<br>（2）线程独享。<br><strong>4、方法区：</strong>用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据<br>（1）线程共享的<br>（2）运行时常量池：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A、是方法区的一部分</span><br><span class="line">B、存放编译期生成的各种字面量和符号引用</span><br><span class="line">C、Class文件中除了存有类的版本、字段、方法、接口等描述信息，还有一项是常量池，存有这个类的 编译期生成的各种字面量和符号引用，这部分内容将在类加载后，存放到方法区的运行时常量池中。</span><br></pre></td></tr></table></figure>
 
 <p><strong>5、堆（Heap）：</strong>Java对象存储的地方<br>（1）Java堆是虚拟机管理的内存中最大的一块<br>（2）Java堆是所有线程共享的区域<br>（3）在虚拟机启动时创建<br>（4）此内存区域的唯一目的就是存放对象实例，几乎所有对象实例都在这里分配内存。存放new生成的对象和数组<br>（5）Java堆是垃圾收集器管理的内存区域，因此很多时候称为“GC堆”</p>
-<p><img src="D:%5CpersonBlog%5Cblog%5Csource_posts%5C%E5%85%B3%E4%BA%8EJVM%5C%E5%A0%86.jpg" alt></p>
+<p><img src="%E5%A0%86.jpg" alt></p>
 <h1 id="2-GC垃圾回收："><a href="#2-GC垃圾回收：" class="headerlink" title="2.GC垃圾回收："></a>2.GC垃圾回收：</h1><h2 id="一、-判断对象是否要回收的方法：可达性分析法"><a href="#一、-判断对象是否要回收的方法：可达性分析法" class="headerlink" title="一、 判断对象是否要回收的方法：可达性分析法"></a>一、 判断对象是否要回收的方法：可达性分析法</h2><p><strong>1、 可达性分析法：</strong>通过一系列“GC Roots”对象作为起点进行搜索，如果在“GC Roots”和一个对象之间没有可达路径，则称该对象是不可达的。不可达对象不一定会成为可回收对象。进入DEAD状态的线程还可以恢复，GC不会回收它的内存。（把一些对象当做root对象，JVM认为root对象是不可回收的，并且root对象引用的对象也是不可回收的）<br><strong>2、 以下对象会被认为是root对象：</strong><br>（1） 虚拟机栈（栈帧中本地变量表）中引用的对象<br>（2） 方法区中静态属性引用的对象<br>（3） 方法区中常量引用的对象<br>（4） 本地方法栈中Native方法引用的对象<br><strong>3、 对象被判定可被回收，需要经历两个阶段：</strong><br>（1） 第一个阶段是可达性分析，分析该对象是否可达<br>（2） 第二个阶段是当对象没有重写finalize()方法或者finalize()方法已经被调用过，虚拟机认为该对象不可以被救活，因此回收该对象。（finalize()方法在垃圾回收中的作用是，给该对象一次救活的机会）<br><strong>4、 方法区中的垃圾回收：</strong><br>（1） 常量池中一些常量、符号引用没有被引用，则会被清理出常量池<br>（2） 无用的类：被判定为无用的类，会被清理出方法区。判定方法如下：<br>A、 该类的所有实例被回收<br>B、 加载该类的ClassLoader被回收<br>C、 该类的Class对象没有被引用<br><strong>5、 finalize():</strong><br>（1） GC垃圾回收要回收一个对象的时候，调用该对象的finalize()方法。然后在下一次垃圾回收的时候，才去回收这个对象的内存。<br>（2） 可以在该方法里面，指定一些对象在释放前必须执行的操作。</p>
 <h2 id="二、-发现虚拟机频繁full-GC时应该怎么办："><a href="#二、-发现虚拟机频繁full-GC时应该怎么办：" class="headerlink" title="二、 发现虚拟机频繁full GC时应该怎么办："></a>二、 发现虚拟机频繁full GC时应该怎么办：</h2><p>（full GC指的是清理整个堆空间，包括年轻代和永久代）<br>（1） 首先用命令查看触发GC的原因是什么 jstat –gccause 进程id<br>（2） 如果是System.gc()，则看下代码哪里调用了这个方法<br>（3） 如果是heap inspection(内存检查)，可能是哪里执行jmap –histo[:live]命令<br>（4） 如果是GC locker，可能是程序依赖的JNI库的原因</p>
 <h2 id="三、常见的垃圾回收算法："><a href="#三、常见的垃圾回收算法：" class="headerlink" title="三、常见的垃圾回收算法："></a>三、常见的垃圾回收算法：</h2><p><strong>1、Mark-Sweep（标记-清除算法）：</strong><br>（1）思想：标记清除算法分为两个阶段，标记阶段和清除阶段。标记阶段任务是标记出所有需要回收的对象，清除阶段就是清除被标记对象的空间。<br>（2）优缺点：实现简单，容易产生内存碎片<br><strong>2、Copying（复制清除算法）：</strong><br>（1）思想：将可用内存划分为大小相等的两块，每次只使用其中的一块。当进行垃圾回收的时候了，把其中存活对象全部复制到另外一块中，然后把已使用的内存空间一次清空掉。<br>（2）优缺点：不容易产生内存碎片；可用内存空间少；存活对象多的话，效率低下。<br><strong>3、Mark-Compact（标记-整理算法）：</strong><br>（1）思想：先标记存活对象，然后把存活对象向一边移动，然后清理掉端边界以外的内存。<br>（2）优缺点：不容易产生内存碎片；内存利用率高；存活对象多并且分散的时候，移动次数多，效率低下</p>
