@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="1.直接&amp;lt;mvc:view-controller …&amp;gt;一般处理：index.jsp -&amp;gt; Controller(@RequsetMapping(“a”)) -&amp;gt;succes.jsp 要用SpringMVC实现：index.jsp -&amp;gt; succes.jsp：（不通过Controller(@RequsetMapping(“a”))）">
-<meta name="keywords" content="学习笔记">
+  <meta name="description" content="写了一个死锁小案例">
+<meta name="keywords" content="死锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[SpringMVC]之InternalResourceViewResolver">
-<meta property="og:url" content="http://www.pniao.club/2019/09/17/SpringMVC-之InternalResourceViewResolver/index.html">
+<meta property="og:title" content="手写一个死锁小案例">
+<meta property="og:url" content="http://www.pniao.club/2020/08/23/手写一个死锁小案例/index.html">
 <meta property="og:site_name" content="Sherlock的个人博客">
-<meta property="og:description" content="1.直接&amp;lt;mvc:view-controller …&amp;gt;一般处理：index.jsp -&amp;gt; Controller(@RequsetMapping(“a”)) -&amp;gt;succes.jsp 要用SpringMVC实现：index.jsp -&amp;gt; succes.jsp：（不通过Controller(@RequsetMapping(“a”))）">
+<meta property="og:description" content="写了一个死锁小案例">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-17T14:26:03.936Z">
+<meta property="og:updated_time" content="2020-08-23T08:22:09.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[SpringMVC]之InternalResourceViewResolver">
-<meta name="twitter:description" content="1.直接&amp;lt;mvc:view-controller …&amp;gt;一般处理：index.jsp -&amp;gt; Controller(@RequsetMapping(“a”)) -&amp;gt;succes.jsp 要用SpringMVC实现：index.jsp -&amp;gt; succes.jsp：（不通过Controller(@RequsetMapping(“a”))）">
-  <link rel="canonical" href="http://www.pniao.club/2019/09/17/SpringMVC-之InternalResourceViewResolver/">
+<meta name="twitter:title" content="手写一个死锁小案例">
+<meta name="twitter:description" content="写了一个死锁小案例">
+  <link rel="canonical" href="http://www.pniao.club/2020/08/23/手写一个死锁小案例/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>[SpringMVC]之InternalResourceViewResolver | Sherlock的个人博客</title>
+  <title>手写一个死锁小案例 | Sherlock的个人博客</title>
   
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2019/09/17/SpringMVC-之InternalResourceViewResolver/">
+    <link itemprop="mainEntityOfPage" href="http://www.pniao.club/2020/08/23/手写一个死锁小案例/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sherlock">
@@ -278,7 +278,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">[SpringMVC]之InternalResourceViewResolver
+          <h1 class="post-title" itemprop="name headline">手写一个死锁小案例
 
             
           </h1>
@@ -295,7 +295,7 @@
                 
               
 
-              <time title="创建时间：2019-09-17 22:16:28 / 修改时间：22:26:03" itemprop="dateCreated datePublished" datetime="2019-09-17T22:16:28+08:00">2019-09-17</time>
+              <time title="创建时间：2020-08-23 16:00:25 / 修改时间：16:22:09" itemprop="dateCreated datePublished" datetime="2020-08-23T16:00:25+08:00">2020-08-23</time>
             </span>
           
             
@@ -308,7 +308,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpringMVC/" itemprop="url" rel="index"><span itemprop="name">SpringMVC</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习笔记/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a></span>
 
                 
                 
@@ -335,63 +335,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-直接-lt-mvc-view-controller-…-gt"><a href="#1-直接-lt-mvc-view-controller-…-gt" class="headerlink" title="1.直接&lt;mvc:view-controller …&gt;"></a>1.直接&lt;mvc:view-controller …&gt;</h1><p>一般处理：index.jsp -&gt; Controller(@RequsetMapping(“a”)) -&gt;succes.jsp</p>
-<p>要用SpringMVC实现：index.jsp -&gt; succes.jsp：（不通过Controller(@RequsetMapping(“a”))）</p>
+        <p>写了一个死锁小案例</p>
 <a id="more"></a>
-<p>&lt;mvc:view-controller path=”a”   view-name=”success” /&gt;</p>
-<p>以上注解 ，会让所有的请求 转入<a href="mvc:.." target="_blank" rel="noopener">mvc:..</a>中匹配映射地址，而会忽略调@RequsetMapping()；<br>如果想让 @RequsetMapping(“a”)  和<a href="mvc:.." target="_blank" rel="noopener">mvc:..</a>共存，则需要加入一个注解：</p>
-<p><a href="mvc:annotation-driven" target="_blank" rel="noopener">mvc:annotation-driven</a></p>
-<h1 id="2-指定请求方式（重定向）"><a href="#2-指定请求方式（重定向）" class="headerlink" title="2.指定请求方式（重定向）"></a>2.指定请求方式（重定向）</h1><p><strong>指定跳转方式：return “forward:/views/success.jsp”;</strong></p>
-<p>forward:   redirect: ，需要注意 此种方式，不会被视图解析器加上前缀(/views)、后缀(.jsp)</p>
-<h1 id="3-处理静态资源：html-css-js-图片-视频"><a href="#3-处理静态资源：html-css-js-图片-视频" class="headerlink" title="3.处理静态资源：html css js  图片 视频"></a>3.处理静态资源：html css js  图片 视频</h1><p>可以与用户交互、因为时间/地点的不同 而结果不同的内容：动态（百度：天气  ）</p>
-<p>在SpringMVC中，如果直接访问静态资源：404 。原因：之前将所有的请求 通过通配符“、” 拦截，进而交给 SPringMVC的入口DispatcherServlet去处理：找该请求映射对应的 @requestMapping</p>
-<p><a href="http://localhost:8888/SpringMVCProject/img.png" target="_blank" rel="noopener">http://localhost:8888/SpringMVCProject/img.png</a></p>
-<p>@RequsetMapping(“img.png”)</p>
-<p>return sucess</p>
-<p>解决：如果是 需要mvc处理的，则交给@RequsetMapping(“img.png”)处理；如果不需要springmvc处理，则使用 tomcat默认的Servlet去处理。<br>tomcat默认的Servlet去处理：如果有 对应的请求拦截,则交给相应的Servlet去处理；如果没有对应的servlet，则直接访问。<br>tomcat默认的Servlet在哪里？在tomcat配置文件\conf\web.xml中</p>
-<pre><code>&lt;servlet&gt;
-    &lt;servlet-name&gt;abc&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;xxx.xxx.xx.ABCServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;
 
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;abc&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;/abc&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;</code></pre><p>解决静态资源方案：如果有springmvc对应的@requestMapping则交给spring处理；如果没有对应@requestMapping,则交给服务器tomcat默认的servlet去处理  ：实现方法，只需要增加2个注解即可 springmvc.xml：<br><a href="mvc:default-servlet-handler" target="_blank" rel="noopener">mvc:default-servlet-handler</a><br><a href="mvc:annotation-driven" target="_blank" rel="noopener">mvc:annotation-driven</a></p>
-<p><strong>总结：要让springmvc访问静态资源，只需要加入以下2个注解：</strong></p>
-<p><a href="mvc:default-servlet-handler" target="_blank" rel="noopener">mvc:default-servlet-handler</a><br><a href="mvc:annotation-driven" target="_blank" rel="noopener">mvc:annotation-driven</a></p>
-<h1 id="4-类型转换"><a href="#4-类型转换" class="headerlink" title="4.类型转换"></a>4.类型转换</h1><p>a.Spring自带一些 常见的类型转换器：</p>
-<p>public String  testDelete(@PathVariable(“id”) String id) ，即可以接受int类型数据id  也可以接受String类型的id</p>
-<p>b.可以自定义类型转换器</p>
-<p>i.编写 自定义类型转器的类 （实现Converter接口）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class MyConverter  implements Converter&lt;String,Student&gt;&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Student convert(String source) &#123;//source:2-zs-23</span><br><span class="line">		//source接受前端传来的String:2-zs-23</span><br><span class="line">		String[] studentStrArr = source.split(&quot;-&quot;) ;</span><br><span class="line">		Student student = new Student();</span><br><span class="line">		student.setId(  Integer.parseInt(  studentStrArr[0]) );</span><br><span class="line">		student.setName(studentStrArr[1]);</span><br><span class="line">		student.setAge(Integer.parseInt(studentStrArr[2] ));</span><br><span class="line">		return student;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三个类：ThreadTask、ThreadTask2,、Count</p>
+<p><strong>Count类</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Count</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> num;</span><br><span class="line">	Object o1 = <span class="keyword">new</span> Object();</span><br><span class="line">	Object o2 = <span class="keyword">new</span> Object();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">count</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">            <span class="keyword">synchronized</span> (o1) &#123;</span><br><span class="line">                System.out.println(<span class="string">"count1锁了o1"</span>);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//睡眠5s</span></span><br><span class="line">                    Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">                    System.out.println(<span class="string">"count1要锁o2"</span>);</span><br><span class="line">                    <span class="keyword">synchronized</span> (o2) &#123;</span><br><span class="line">                        System.out.println(<span class="string">"count1锁了o2"</span>);</span><br><span class="line">                    &#125;			</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">count2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"count2要锁o2"</span>);</span><br><span class="line">		<span class="keyword">synchronized</span> (o2) &#123;</span><br><span class="line">			System.out.println(<span class="string">"count2锁了o2"</span>);</span><br><span class="line">			System.out.println(<span class="string">"count2要锁o1"</span>);</span><br><span class="line">			<span class="keyword">synchronized</span> (o1) &#123;</span><br><span class="line">				System.out.println(<span class="string">"count2锁了o1"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>ii.配置：将MyConverter加入到springmvc中</p>
-<!-- 1将 自定义转换器 纳入SpringIOC容器 -->
-<pre><code>&lt;bean  id=&quot;myConverter&quot; class=&quot;org.lanqiao.converter.MyConverter&quot;&gt;&lt;/bean&gt;
+<p><strong>ThreadTask类（运行时锁o1,等待5s后,尝试去锁o2）：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	Count count;</span><br><span class="line">	ThreadTask(Count count)&#123;</span><br><span class="line">		<span class="keyword">this</span>.count = count;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;			</span><br><span class="line">			count.count();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-&lt;!-- 2将myConverter再纳入 SpringMVC提供的转换器Bean --&gt;
-&lt;bean id=&quot;conversionService&quot;  class=&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;&gt;
-    &lt;property name=&quot;converters&quot;&gt;
-        &lt;set&gt;
-            &lt;ref bean=&quot;myConverter&quot;/&gt;
-        &lt;/set&gt;
-    &lt;/property&gt;
-&lt;/bean&gt;
+<p><strong>ThreadTask2类（运行时锁o2,立刻尝试去锁o1）：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTask2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	Count count;</span><br><span class="line">	ThreadTask2(Count count)&#123;</span><br><span class="line">		<span class="keyword">this</span>.count = count;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;			</span><br><span class="line">			count.count2();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-&lt;!-- 3将conversionService注册到annotation-driven中 --&gt;
-&lt;!--此配置是SpringMVC的基础配置，很功能都需要通过该注解来协调  --&gt;
-&lt;mvc:annotation-driven conversion-service=&quot;conversionService&quot;&gt;&lt;/mvc:annotation-driven&gt;</code></pre><p>测试转换器：</p>
-<pre><code>@RequestMapping(value=&quot;testConverter&quot;)
-public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student student) {// 前端：2-zs-23  
+<p><strong>执行main函数：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      Count count = <span class="keyword">new</span> Count();</span><br><span class="line">      ThreadTask threadTask = <span class="keyword">new</span> ThreadTask(count);</span><br><span class="line">      ThreadTask2 threadTask2 = <span class="keyword">new</span> ThreadTask2(count);</span><br><span class="line">ThreadPoolExecutor ex = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">10</span>, <span class="number">10</span>, <span class="number">1000</span>,                                     TimeUnit.MILLISECONDS,</span><br><span class="line">		<span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(),Executors.defaultThreadFactory(),</span><br><span class="line">		<span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br><span class="line">ex.execute(threadTask);</span><br><span class="line">ex.execute(threadTask2);</span><br></pre></td></tr></table></figure>
 
-    System.out.println(student.getId()+&quot;,&quot;+student.getName()+&quot;,&quot;+student.getAge());
-
-    return &quot;success&quot;;
-}</code></pre><p>其中@RequestParam(“studentInfo”)是触发转换器的桥梁：<br>@RequestParam(“studentInfo”)接受的数据 是前端传递过来的：2-zs-23  ，但是 需要将该数据 复制给 修饰的目的对象Student；因此SPringMVC可以发现 接收的数据 和目标数据不一致，并且 这两种数据分别是 String、Student,正好符合public Student convert(String source)转换器。</p>
-<h1 id="5-数据格式化"><a href="#5-数据格式化" class="headerlink" title="5.数据格式化"></a>5.数据格式化</h1><pre><code>SimpleDateForamt sdf = new SimpleDateFormat(&quot;yyyy-MM-dd  hh:mm:ss&quot;);</code></pre><p>SPringMVC提供了很多注解，方便我们数据格式化<br>实现步骤：<br>a.配置<br>    <!-- 配置 数据格式化 注解 所依赖的bean --><br>    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"><br>    </bean></p>
-<p>b.通过注解使用</p>
-<p><strong>@DateTimeFormat(pattern=”yyyy-MM-dd”)</strong><br><strong>@NumberFormat(parttern=”###,#”)</strong></p>
+<p><strong>运行结果</strong></p>
+<blockquote>
+<p>count1锁了o1<br>count2要锁o2<br>count2锁了o2<br>count2要锁o1<br>count1要锁o2</p>
+</blockquote>
+<p>可以看到</p>
+<p>ThreadTask持有o1的锁，尝试去获取o2的锁；</p>
+<p>ThreadTask2持有o2的锁，尝试去获取o1的锁；</p>
+<p>发生死锁</p>
 
     </div>
 
@@ -424,7 +391,7 @@ public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student stud
           
           <div class="post-tags">
             
-              <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+              <a href="/tags/死锁/" rel="tag"><i class="fa fa-tag"></i> 死锁</a>
             
           </div>
         
@@ -434,8 +401,8 @@ public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student stud
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/16/Mybatis-学习笔记/" rel="next" title="[MyBatis]学习笔记">
-                  <i class="fa fa-chevron-left"></i> [MyBatis]学习笔记
+                <a href="/2020/08/23/Java中的各种锁/" rel="next" title="Java中的各种锁">
+                  <i class="fa fa-chevron-left"></i> Java中的各种锁
                 </a>
               
             </div>
@@ -443,10 +410,6 @@ public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student stud
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/18/SpringMVC-之数据处理/" rel="prev" title="[SpringMVC]之数据处理">
-                  [SpringMVC]之数据处理 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -485,17 +448,8 @@ public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student stud
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -613,23 +567,6 @@ public String testConverter(@RequestParam(&quot;studentInfo&quot;)  Student stud
 
         </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-直接-lt-mvc-view-controller-…-gt"><span class="nav-text">1.直接&lt;mvc:view-controller …&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-指定请求方式（重定向）"><span class="nav-text">2.指定请求方式（重定向）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-处理静态资源：html-css-js-图片-视频"><span class="nav-text">3.处理静态资源：html css js  图片 视频</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-类型转换"><span class="nav-text">4.类型转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-数据格式化"><span class="nav-text">5.数据格式化</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 	  
 	  
 	  
